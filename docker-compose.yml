@@ -1,0 +1,48 @@
+---
+version: '3'
+services:
+  dbclient:
+    build: .
+    container_name: mysql-client
+    environment:
+      - MYSQL_PASSWORD=root
+      - ACTION_DATABASE=create
+      - ACTION_DATABASE_NAME=testdbb
+      - ACTION_USER=create
+      - ACTION_USER_NAME=test-user
+      - ACTION_USER_PASSWORD=adminadmin123
+      - ACTION_USER_ALLOWED_HOSTS=%
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - database
+
+  mysql:
+    image: mysql:5.7
+    container_name: dummy-mysql
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysql" ,"--password=root", "--user=root", "--execute=SHOW DATABASES"]
+      interval: 15s
+      timeout: 20s
+      retries: 5
+      start_period: 15s
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=dummy
+      - MYSQL_USER=dummy
+      - MYSQL_PASSWORD=p@ssw0rd
+    networks:
+      - database
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - database
+
+networks:
+  database:

@@ -1,0 +1,45 @@
+name: Action for creating Docker image for releases and pushing it to DockerHub
+
+on:
+  release:
+    types: [published]
+
+env:
+  # Use docker.io for Docker Hub if empty
+  # github.repository as <account>/<repo>
+  IMAGE_NAME: mysql-scriptor-container
+  DOCKERFILE_DIR: .
+
+jobs:
+  build-docker:
+    name: Builds Docker Images
+    runs-on: ubuntu-20.04
+    strategy:
+          matrix:
+            alpine-versions: [ '3.13', '3.14', '3.15', '3.16', 'latest' ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+  
+      - name: Login to DockerHub
+        uses: docker/login-action@v1 
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set Version in DOCKERFILE_DIR
+        run: |
+          sed -i "1s/.*/ARG ALPINE_VERSION=${{ matrix.alpine-version }}/" ${{ env.DOCKERFILE_DIR }}/Dockerfile
+          
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          context: ${{ env.DOCKERFILE_DIR }} 
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ matrix.alpine-version }}

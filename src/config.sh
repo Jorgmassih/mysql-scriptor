@@ -3,8 +3,15 @@
 # Create Mysql client config file
 echo "Creating Mysql client config..."
 echo "[client]" >> $MYSQL_CLIENT_CONFIG
-echo "user=${MYSQL_USER:-root}" >> $MYSQL_CLIENT_CONFIG
-echo "password=$MYSQL_PASSWORD" >> $MYSQL_CLIENT_CONFIG
+if [[ -f $CREDENTIASL_FILE ]]
+then
+    echo "Using credentials file: $CREDENTIALS_FILE"
+    cat $CREDENTIALS_FILE >> $MYSQL_CLIENT_CONFIG
+    echo "" >> $MYSQL_CLIENT_CONFIG
+else
+    echo "user=${MYSQL_USER:-root}" >> $MYSQL_CLIENT_CONFIG
+    echo "password=$MYSQL_PASSWORD" >> $MYSQL_CLIENT_CONFIG
+fi
 echo "host=${MYSQL_HOST:-mysql}" >> $MYSQL_CLIENT_CONFIG
 echo "port=${MYSQL_PORT:-3306}" >> $MYSQL_CLIENT_CONFIG
 echo "protocol=${MYSQL_PROTOCOL:-TCP}" >> $MYSQL_CLIENT_CONFIG

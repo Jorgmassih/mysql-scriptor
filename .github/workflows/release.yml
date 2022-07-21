@@ -21,6 +21,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       
+      - name: Retrieve version
+        id: version
+        run: |
+          echo "::set-output name=app_ver::$(cat ./version)"
+      
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       
@@ -45,4 +50,4 @@ jobs:
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:alpine-${{ matrix.alpine-versions }}
-            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:$(cat ./version)-alpine-${{ matrix.alpine-versions }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ steps.version.outputs.app_ver }}-alpine-${{ matrix.alpine-versions }}

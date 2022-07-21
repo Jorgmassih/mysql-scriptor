@@ -47,4 +47,4 @@ jobs:
         with:
           push: true
           context: ${{ env.DOCKERFILE_DIR }} 
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:alpine${{ matrix.alpine-versions }}_${{ github.sha }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:alpine-${{ matrix.alpine-versions }}_${{ github.sha }}

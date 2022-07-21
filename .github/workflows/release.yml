@@ -44,5 +44,5 @@ jobs:
           context: ${{ env.DOCKERFILE_DIR }} 
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:alpine${{ matrix.alpine-version }}
-            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:$(cat ./version)-alpine${{ matrix.alpine-version }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:alpine${{ matrix.alpine-versions }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:$(cat ./version)-alpine${{ matrix.alpine-versions }}

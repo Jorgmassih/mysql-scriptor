@@ -57,7 +57,7 @@ services:
       - ACTION_DATABASE_NAME=testdbb
       - ACTION_USER=create
       - ACTION_USER_NAME=test-user
-      - ACTION_USER_PASSWORD=adminadmin123
+      - ACTION_USER_PASSWORD=P@ssw0rd
       - ACTION_USER_ALLOWED_HOSTS=%
       - ACTION_USER_GRANT_ALL=yes
     depends_on: 
@@ -70,9 +70,6 @@ services:
     container_name: dummy-mysql
     environment:
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=dummy
-      - MYSQL_USER=dummy
-      - MYSQL_PASSWORD=p@ssw0rd
     networks:
       - database
 

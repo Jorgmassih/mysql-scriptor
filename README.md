@@ -25,10 +25,10 @@ To use this tool you must pull the image from [Docker Hub](https://hub.docker.co
 
 ```shell
 docker run jorgmassih/mysql-scriptor-container \
-    -e MYSQL_HOST=<database-host> \
-    -e MYSQL_PORT=<database-port> \
-    -e MYSQL_USER=<database-user> \
-    -e MYSQL_PASSWORD=<database-password> \
+    -e MYSQL_HOST='<your-database-host>' \
+    -e MYSQL_PORT='<your-database-port>' \
+    -e MYSQL_USER='<your-database-user>' \
+    -e MYSQL_PASSWORD='<your-database-password>' \
     -e ACTION_DATABASE='create' \
     -e ACTION_DATABASE_NAME='testdb' \
     -e ACTION_USER='create' \

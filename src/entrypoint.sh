@@ -7,7 +7,7 @@ echo "Loading client config..."
 echo "Starting the application..."
 
 echo "Testing connection to the database..."
-if [[ $(mysql -e"quit") ]];
+if mysql -e"quit" ;
 then
     echo "Connection to the database successful."
 else
@@ -15,11 +15,8 @@ else
     exit 1
 fi
 
-echo "Executing SQL scripts"
-for script in $SQL_SCRIPTS_DIR/*.sql; do
-    echo "Running: $script"
-    mysql < $script
-done
+echo "Executing SQL scripts if they exist..."
+find $SQL_SCRIPTS_DIR -maxdepth 1 -type f -name '*.sql' -exec mysql < {} \; 
 
 if [ $ACTION_DATABASE ]; then
     echo "Running database action: $ACTION_DATABASE"

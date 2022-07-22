@@ -5,7 +5,6 @@ FROM alpine:$ALPINE_VERSION
 # APP Env Variables
 ENV SQL_SCRIPTS_DIR=/sql
 ENV MYSQL_CLIENT_CONFIG=/etc/mysql/my.cnf
-ENV CREDENTIALS_FILE=/etc/.mysql-cred
 ENV APP_SCRIPTS_DIR=/scripts
 ENV USER=mysql-user
 

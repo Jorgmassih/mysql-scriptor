@@ -12,28 +12,25 @@ services:
       - ACTION_USER_PASSWORD=adminadmin123
       - ACTION_USER_ALLOWED_HOSTS=%
     volumes:
-      - .mysql-cred:/etc/.mysql-cred
+      - .mysql-conf:/etc/mysql/my.cnf
     depends_on:
-      mysql:
+      database:
         condition: service_healthy
     networks:
       - database
 
-  mysql:
+  database:
     image: mysql:5.7
     container_name: dummy-mysql
     restart: always
     healthcheck:
-      test: ["CMD", "mysql" ,"--password=root", "--user=root", "--execute=SHOW DATABASES"]
+      test: ["CMD", "mysql" ,"--password=root", "--user=root", "--execute=SHOW DATABASES;"]
       interval: 15s
       timeout: 20s
       retries: 5
       start_period: 15s
     environment:
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=dummy
-      - MYSQL_USER=dummy
-      - MYSQL_PASSWORD=p@ssw0rd
     networks:
       - database
 

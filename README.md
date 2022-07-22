@@ -43,6 +43,7 @@ The previous command will attempt to create a database called `testdb` and also 
 You can also write that long line in a `docker-compose` file for an elegant solution.
 
 ```yaml
+---
 version: '3'
 services:
   msc: 
@@ -54,7 +55,7 @@ services:
       - MYSQL_USER=root
       - MYSQL_PASSWORD=root
       - ACTION_DATABASE=create
-      - ACTION_DATABASE_NAME=testdbb
+      - ACTION_DATABASE_NAME=testdb
       - ACTION_USER=create
       - ACTION_USER_NAME=test-user
       - ACTION_USER_PASSWORD=P@ssw0rd
@@ -87,6 +88,39 @@ networks:
 ```
 
 > **Important Note**: make sure the user you are using has Privileges to Grant to other users. In the above example, the user `root` were used.
+
+You can specify the MySQL configuration in a file and create a bind volume to the path `/etc/mysql/my.cnf` in the container. Thi configuration file must have to follow the [MySQL documentation](https://dev.mysql.com/doc/refman/8.0/en/option-files.html) for `my.cnf` file but just with the `[client]` group.
+
+```ini
+# my-config.cnf
+[client]
+host=database
+user=jorgmassih
+password=root
+port=3306
+protocol=tcp
+```
+
+```yml
+---
+version: '3'
+services:
+  msc: 
+    image: jorgmassih/mysql-scriptor-container 
+    container_name: mysql-client
+    environment:
+      - ACTION_DATABASE=create
+      - ACTION_DATABASE_NAME=testdb
+      - ACTION_USER=create
+      - ACTION_USER_NAME=test-user
+      - ACTION_USER_PASSWORD=P@ssw0rd
+      - ACTION_USER_ALLOWED_HOSTS=%
+      - ACTION_USER_GRANT_ALL=yes
+    volumes: 
+      - /path/to/my-config.cnf:/etc/mysql/my.cnf
+    networks:
+      - mysql-database-network
+```
 
 ### Prerequisites
 

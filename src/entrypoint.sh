@@ -44,7 +44,7 @@ if [ $ACTION_USER ]; then
             echo "Creating user ${ACTION_USER_NAME}..."
             mysql -e"CREATE USER IF NOT EXISTS '$ACTION_USER_NAME'@'${ACTION_USER_ALLOWED_HOSTS:-localhost}' IDENTIFIED WITH ${ACTION_USER_AUTH_PLUGIN:-mysql_native_password} BY '$ACTION_USER_PASSWORD';" 
             
-            if [ ${ACTION_USER_GRANT_ALL:-no,,} == 'yes' ]; then
+            if [ ${ACTION_USER_GRANT_ALL_ON_DB:-no,,} == 'yes' ]; then
                 echo "Granting user access to database $ACTION_DATABASE_NAME for $ACTION_USER_NAME..."
                 mysql -e"GRANT ALL PRIVILEGES ON $ACTION_DATABASE_NAME.* TO '$ACTION_USER_NAME'@'${ACTION_USER_ALLOWED_HOSTS:-localhost}'; FLUSH PRIVILEGES;"
             fi

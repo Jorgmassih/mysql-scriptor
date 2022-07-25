@@ -10,6 +10,9 @@ echo "Testing connection to the database..."
 if mysql -e"quit" ;
 then
     echo "Connection to the database successful."
+    if ${TEST_CONNECTION_ONLY:-no}; then
+        exit 0
+    fi
 else
     echo "Connection to the database failed."
     exit 1

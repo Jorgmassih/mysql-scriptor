@@ -9,7 +9,7 @@
 
 ## About <a name = "about"></a>
 
-This tool helps to automate common scripts with [MySQL Containers](https://hub.docker.com/_/mysql) without writting any command on [MySQL CLI](https://dev.mysql.com/doc/refman/8.0/en/mysql.html).
+This tool helps to automate common scripts with [MySQL Containers](https://hub.docker.com/_/mysql) without writting any command on the [MySQL CLI](https://dev.mysql.com/doc/refman/8.0/en/mysql.html).
 
 Supported tasks for the moment are:
 - User creation (with grant privileges) and dropping.
@@ -17,11 +17,11 @@ Supported tasks for the moment are:
 - Multiple `.sql` scripts execution.
 - Connection testing.
 
-This tool is util for automation and _CI/CD_ proccess since it allows run scripts on MySQL database faster and in a secure way.
+This tool is also util for automation and _CI/CD_ procceses since it allows run scripts on MySQL database in a faster and secure way, without connecting directly to it.
 
 ## Getting Started <a name = "getting_started"></a>
 
-To use this tool you must pull the image from [Docker Hub](https://hub.docker.com/r/jorgmassih/mysql-scriptor-container), and run a container in the **same network** as your database container, additionally you must pass the environments variables that describes what you want to achieve. 
+To use this tool you must pull the image from [Docker Hub](https://hub.docker.com/r/jorgmassih/mysql-scriptor-container), and run the container in the **same network** as your database container, additionally you must pass the environments variables that describes what you want to achieve. 
 
 ```shell
 docker run jorgmassih/mysql-scriptor-container \
@@ -87,9 +87,12 @@ networks:
   database:
 ```
 
-> **Important Note**: make sure the user you are using has Privileges to Grant to other users. In the above example, the user `root` were used.
+> **Important Note**: make sure the user you are using has Privileges to Grant other users. In the above example, the user `root` were used.
 
-You can specify the MySQL configuration in a file and create a bind volume to the path `/etc/mysql/my.cnf` in the container. Thi configuration file must have to follow the [MySQL documentation](https://dev.mysql.com/doc/refman/8.0/en/option-files.html) for `my.cnf` file but just with the `[client]` group.
+
+### Using a configuration file
+
+You can specify the MySQL configuration in a file and create a bind volume to the path `/etc/mysql/my.cnf` in the container. This configuration file must have to follow the [MySQL documentation](https://dev.mysql.com/doc/refman/8.0/en/option-files.html) for `my.cnf` file but just with the `[client]` group.
 
 ```ini
 # my-config.cnf
@@ -100,7 +103,7 @@ password=root
 port=3306
 protocol=tcp
 ```
-
+And inside of the `docker-compose.yml`:
 ```yml
 ---
 version: '3'
@@ -122,32 +125,50 @@ services:
       - mysql-database-network
 ```
 
-### Prerequisites
+Keeping a file ready with your connection parameters allows you to run the container without keeping your credentials in your _CI/CD_ process.
 
-What things you need to install the software and how to install them.
-
-```
-Give examples
-```
+If you want a more secure approach while using it manually, you can remove the credentias from your configuration file and set to `yes` the environmental variable `PROMPT_CREDENTIALS`, and then you will be prompted for connection `user` and `password`.
 
 ### Environmental Variables
 
-A step by step series of examples that tell you how to get a development env running.
+Available Environmental Variables at the moment will be listed below.
 
-Say what the step will be
+**MySQL connection variables**
+| Variable Name              | Options                | Default | Description                |
+|----------------------------|------------------------|---------|----------------------------|
+| `MYSQL_USER`               | Any                    | root    | MySQL connection user.     |
+| `MYSQL_PASSWORD`           | Any                    | _N/A_   | MySQL connection password. |
+| `MYSQL_HOST`               | Any                    | mysql   | MySQL connection host.     |
+| `MYSQL_PORT`               | Any number             | 3306    | MySQL connection port.     |
+| `MYSQL_PROTOCOL`           | tcp,socket,pipe,memory | tcp     | MySQL connecto protocol.   |
+| `MYSQL_CONNECTION_TIMEOUT` | Any number             | 5       | MySQL connection timeout.  |
 
-```
-Give the example
-```
+**Actions variables**
+| Variable Name                 | Options               | Default               | Description                                                           |
+|-------------------------------|-----------------------|-----------------------|-----------------------------------------------------------------------|
+| `ACTION_USER`                 | create,drop           | create                | Creates or Drops user.                                                |
+| `ACTION_USER_NAME`            | any                   | _N/A_                 | Name of user to create or drop.                                       |
+| `ACTION_USER_PASSWORD `       | any                   | _N/A_                 | User password (only with `create` action)                             |
+| `ACTION_USER_ÀLLOWED_HOSTS`   | any ip direcction     | localhost             | Specify which hosts will be available to use the user.                |
+| `ACTION_USER_AUTH_PLUGIN`     | mysql_native_password | mysql_native_password | Authentication plugin for connection.                                 |
+| `ACTION_USER_GRANT_ALL_ON_DB` | yes,no                | no                    | Grants all privileges for selected database by `ACTION_DATABASE_NAME` |
+| `ACTION_DATABASE`             | create,drop           | create                | Creates or Drops database.                                            |
+| `ACTION_DATABASE_NAME`        | any                   | _N/A_                 | Name of database to create or drop.                                   |
 
-And repeat
 
-```
-until finished
-```
+**Others variables**
+| Variable Name              | Options    | Default       | Description                     |
+|----------------------------|------------|---------------|---------------------------------|
+| `PROMPT_CREDENTIALS`       | yes,no     | no            | Allways prompt any credential.  |
 
-End with an example of getting some data out of the system or using it for a little demo.
+## ⛏️ Built Using <a name = "built_using"></a>
 
-## Usage <a name = "usage"></a>
+- [Purely Bash 📟](https://en.wikipedia.org/wiki/Bash_(Unix_shell))
 
-Add notes about how to use the system.
+## ✍️ Authors <a name = "authors"></a>
+
+- [@jorgmassih👨‍💻](https://github.com/jorgmassih) - Idea & Initial work
+
+## 🤝 Contributing <a name = "contributing"></a>
+I'm open to contributions!
+If you are interested in collaborating, you can reach out to me via the info on [my bio](https://github.com/Jorgmassih).

@@ -151,7 +151,7 @@ Available Environmental Variables at the moment will be listed below.
 | `ACTION_USER`                 | create,drop           | create                | Creates or Drops user.                                                |
 | `ACTION_USER_NAME`            | any                   | _N/A_                 | Name of user to create or drop.                                       |
 | `ACTION_USER_PASSWORD `       | any                   | _N/A_                 | User password (only with `create` action)                             |
-| `ACTION_USER_ÀLLOWED_HOSTS`   | any ip direcction     | localhost             | Specify which hosts will be available to use the user.                |
+| `ACTION_USER_ALLOWED_HOSTS`   | any ip direcction     | localhost             | Specify which hosts will be available to use the user.                |
 | `ACTION_USER_AUTH_PLUGIN`     | mysql_native_password | mysql_native_password | Authentication plugin for connection.                                 |
 | `ACTION_USER_GRANT_ALL_ON_DB` | yes,no                | no                    | Grants all privileges for selected database by `ACTION_DATABASE_NAME` |
 | `ACTION_DATABASE`             | create,drop           | create                | Creates or Drops database.                                            |
@@ -161,7 +161,8 @@ Available Environmental Variables at the moment will be listed below.
 **Others variables**
 | Variable Name              | Options    | Default       | Description                     |
 |----------------------------|------------|---------------|---------------------------------|
-| `PROMPT_PASSWORDS`       | yes,no     | no            | Allways prompt any credential.  |
+| `PROMPT_PASSWORDS`         | yes,no     | no            | Allways prompt any password.    |
+| `TEST_CONNECTION_ONLY`     | yes,no     | no            | Exits after connection testing. |
 
 ## ⛏️ Built Using <a name = "built_using"></a>
 

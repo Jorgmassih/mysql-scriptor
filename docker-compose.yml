@@ -5,14 +5,18 @@ services:
     build: .
     container_name: mysql-client
     environment:
+      - MYSQL_HOST=dbserver
+      - MYSQL_PORT=3306
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
       - ACTION_DATABASE=create
       - ACTION_DATABASE_NAME=testdb
       - ACTION_USER=create
       - ACTION_USER_NAME=test-user
       - ACTION_USER_PASSWORD=adminadmin123
       - ACTION_USER_ALLOWED_HOSTS=%
-    volumes:
-      - .mysql-conf:/etc/mysql/my.cnf
+    # volumes:
+    #   - .mysql-conf:/etc/mysql/my.cnf
     depends_on:
       database:
         condition: service_healthy

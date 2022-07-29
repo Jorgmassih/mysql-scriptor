@@ -10,7 +10,7 @@ echo "Testing connection to the database..."
 if mysql -e"quit" ;
 then
     echo "Connection to the database successful."
-    if ${TEST_CONNECTION_ONLY:-no}; then
+    if [ ${TEST_CONNECTION_ONLY:-no} == 'yes' ]; then
         exit 0
     fi
 else
@@ -19,7 +19,7 @@ else
 fi
 
 echo "Executing SQL scripts if they exist..."
-find $SQL_SCRIPTS_DIR -maxdepth 1 -type f -name '*.sql' -exec mysql < {} \; 
+find $SQL_SCRIPTS_DIR/. -maxdepth 1 -type f -name '*.sql' -exec mysql < {} \; 
 
 if [ $ACTION_DATABASE ]; then
     echo "Running database action: $ACTION_DATABASE"
@@ -42,12 +42,21 @@ fi
 
 
 if [ $ACTION_USER ]; then
+    echo "Running database action: $ACTION_USER"
     case ${ACTION_USER} in
         "create")
             echo "Creating user ${ACTION_USER_NAME}..."
-            mysql -e"CREATE USER IF NOT EXISTS '$ACTION_USER_NAME'@'${ACTION_USER_ALLOWED_HOSTS:-localhost}' IDENTIFIED WITH ${ACTION_USER_AUTH_PLUGIN:-mysql_native_password} BY '$ACTION_USER_PASSWORD';" 
+            password = $ACTION_USER_PASSWORD 
+
+            if [ ${PROMPT_PASSWORDS:-no} == 'yes' ]; then
+                echo -n "Insert password: "
+                read -s prompted_pass
+                password = $prompted_pass
+            fi
+
+            mysql -e"CREATE USER IF NOT EXISTS '$ACTION_USER_NAME'@'${ACTION_USER_ALLOWED_HOSTS:-localhost}' IDENTIFIED WITH ${ACTION_USER_AUTH_PLUGIN:-mysql_native_password} BY '$password';" 
             
-            if [ ${ACTION_USER_GRANT_ALL_ON_DB:-no,,} == 'yes' ]; then
+            if [ ${ACTION_USER_GRANT_ALL_ON_DB:-no} == 'yes' ]; then
                 echo "Granting user access to database $ACTION_DATABASE_NAME for $ACTION_USER_NAME..."
                 mysql -e"GRANT ALL PRIVILEGES ON $ACTION_DATABASE_NAME.* TO '$ACTION_USER_NAME'@'${ACTION_USER_ALLOWED_HOSTS:-localhost}'; FLUSH PRIVILEGES;"
             fi

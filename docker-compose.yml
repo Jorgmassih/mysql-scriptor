@@ -6,7 +6,7 @@ services:
     container_name: mysql-client
     environment:
       - ACTION_DATABASE=create
-      - ACTION_DATABASE_NAME=testdbb
+      - ACTION_DATABASE_NAME=testdb
       - ACTION_USER=create
       - ACTION_USER_NAME=test-user
       - ACTION_USER_PASSWORD=adminadmin123

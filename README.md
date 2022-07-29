@@ -161,7 +161,7 @@ Available Environmental Variables at the moment will be listed below.
 **Others variables**
 | Variable Name              | Options    | Default       | Description                     |
 |----------------------------|------------|---------------|---------------------------------|
-| `PROMPT_CREDENTIALS`       | yes,no     | no            | Allways prompt any credential.  |
+| `PROMPT_PASSWORDS`       | yes,no     | no            | Allways prompt any credential.  |
 
 ## ⛏️ Built Using <a name = "built_using"></a>
 

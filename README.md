@@ -4,7 +4,7 @@
 
 - [About](#about)
 - [Getting Started](#getting_started)
-- [Usage](#usage)
+- [Avanced usage](#avanced_usage)
 - [Built Using](#built_using)
 - [Authors](#authors)
 - [Contributing](#contribuiting)
@@ -91,7 +91,41 @@ networks:
 
 > **Important Note**: make sure the user you are using has Privileges to Grant other users. In the above example, the user `root` were used.
 
+### Environmental Variables
 
+Available Environmental Variables at the moment will be listed below.
+
+**MySQL connection variables**
+| Variable Name              | Options                | Default | Description                |
+|----------------------------|------------------------|---------|----------------------------|
+| `MYSQL_USER`               | Any                    | root    | MySQL connection user.     |
+| `MYSQL_PASSWORD`           | Any                    | _N/A_   | MySQL connection password. |
+| `MYSQL_HOST`               | Any                    | mysql   | MySQL connection host.     |
+| `MYSQL_PORT`               | Any number             | 3306    | MySQL connection port.     |
+| `MYSQL_PROTOCOL`           | tcp,socket,pipe,memory | tcp     | MySQL connecto protocol.   |
+| `MYSQL_CONNECTION_TIMEOUT` | Any number             | 5       | MySQL connection timeout.  |
+
+**Actions variables**
+| Variable Name                 | Options               | Default               | Description                                                           |
+|-------------------------------|-----------------------|-----------------------|-----------------------------------------------------------------------|
+| `ACTION_USER`                 | create,drop           | create                | Creates or Drops user.                                                |
+| `ACTION_USER_NAME`            | any                   | _N/A_                 | Name of user to create or drop.                                       |
+| `ACTION_USER_PASSWORD `       | any                   | _N/A_                 | User password (only with `create` action)                             |
+| `ACTION_USER_ALLOWED_HOSTS`   | any ip direcction     | localhost             | Specify which hosts will be available to use the user.                |
+| `ACTION_USER_AUTH_PLUGIN`     | mysql_native_password | mysql_native_password | Authentication plugin for connection.                                 |
+| `ACTION_USER_GRANT_ALL_ON_DB` | yes,no                | no                    | Grants all privileges for selected database by `ACTION_DATABASE_NAME` |
+| `ACTION_DATABASE`             | create,drop           | create                | Creates or Drops database.                                            |
+| `ACTION_DATABASE_NAME`        | any                   | _N/A_                 | Name of database to create or drop.                                   |
+
+
+**Others variables**
+| Variable Name              | Options    | Default       | Description                     |
+|----------------------------|------------|---------------|---------------------------------|
+| `PROMPT_PASSWORDS`         | yes,no     | no            | Allways prompt any password.    |
+| `TEST_CONNECTION_ONLY`     | yes,no     | no            | Exits after connection testing. |
+
+
+## Avanced usage <a name = "avance_usage"></a>
 ### Using a configuration file
 
 You can specify the MySQL configuration in a file and create a bind volume to the path `/etc/mysql/my.cnf` in the container. This configuration file must have to follow the [MySQL documentation](https://dev.mysql.com/doc/refman/8.0/en/option-files.html) for `my.cnf` file but just with the `[client]` group.
@@ -131,38 +165,6 @@ Keeping a file ready with your connection parameters allows you to run the conta
 
 If you want a more secure approach while using it manually, you can remove the credentias from your configuration file and set to `yes` the environmental variable `PROMPT_CREDENTIALS`, and then you will be prompted for connection `user` and `password`.
 
-### Environmental Variables
-
-Available Environmental Variables at the moment will be listed below.
-
-**MySQL connection variables**
-| Variable Name              | Options                | Default | Description                |
-|----------------------------|------------------------|---------|----------------------------|
-| `MYSQL_USER`               | Any                    | root    | MySQL connection user.     |
-| `MYSQL_PASSWORD`           | Any                    | _N/A_   | MySQL connection password. |
-| `MYSQL_HOST`               | Any                    | mysql   | MySQL connection host.     |
-| `MYSQL_PORT`               | Any number             | 3306    | MySQL connection port.     |
-| `MYSQL_PROTOCOL`           | tcp,socket,pipe,memory | tcp     | MySQL connecto protocol.   |
-| `MYSQL_CONNECTION_TIMEOUT` | Any number             | 5       | MySQL connection timeout.  |
-
-**Actions variables**
-| Variable Name                 | Options               | Default               | Description                                                           |
-|-------------------------------|-----------------------|-----------------------|-----------------------------------------------------------------------|
-| `ACTION_USER`                 | create,drop           | create                | Creates or Drops user.                                                |
-| `ACTION_USER_NAME`            | any                   | _N/A_                 | Name of user to create or drop.                                       |
-| `ACTION_USER_PASSWORD `       | any                   | _N/A_                 | User password (only with `create` action)                             |
-| `ACTION_USER_ALLOWED_HOSTS`   | any ip direcction     | localhost             | Specify which hosts will be available to use the user.                |
-| `ACTION_USER_AUTH_PLUGIN`     | mysql_native_password | mysql_native_password | Authentication plugin for connection.                                 |
-| `ACTION_USER_GRANT_ALL_ON_DB` | yes,no                | no                    | Grants all privileges for selected database by `ACTION_DATABASE_NAME` |
-| `ACTION_DATABASE`             | create,drop           | create                | Creates or Drops database.                                            |
-| `ACTION_DATABASE_NAME`        | any                   | _N/A_                 | Name of database to create or drop.                                   |
-
-
-**Others variables**
-| Variable Name              | Options    | Default       | Description                     |
-|----------------------------|------------|---------------|---------------------------------|
-| `PROMPT_PASSWORDS`         | yes,no     | no            | Allways prompt any password.    |
-| `TEST_CONNECTION_ONLY`     | yes,no     | no            | Exits after connection testing. |
 
 ## ⛏️ Built Using <a name = "built_using"></a>
 

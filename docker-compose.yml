@@ -4,6 +4,8 @@ services:
   dbclient:
     build: .
     container_name: mysql-client
+    stdin_open: true
+    tty: true
     environment:
       - MYSQL_HOST=dbserver
       - MYSQL_PORT=3306
@@ -16,7 +18,7 @@ services:
       - ACTION_USER_PASSWORD=adminadmin123
       - ACTION_USER_ALLOWED_HOSTS=%
     # volumes:
-    #   - .mysql-conf:/etc/mysql/my.cnf
+    #   - .mysql-conf:/etc/scriptor-conf/my.cnf
     depends_on:
       database:
         condition: service_healthy

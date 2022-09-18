@@ -48,12 +48,6 @@ if [ $ACTION_USER ]; then
             echo "Creating user ${ACTION_USER_NAME}..."
             password = $ACTION_USER_PASSWORD 
 
-            if [ ${PROMPT_PASSWORDS:-no} == 'yes' ]; then
-                echo -n "Insert password: "
-                read -s prompted_pass
-                password = $prompted_pass
-            fi
-
             mysql -e"CREATE USER IF NOT EXISTS '$ACTION_USER_NAME'@'${ACTION_USER_ALLOWED_HOSTS:-localhost}' IDENTIFIED WITH ${ACTION_USER_AUTH_PLUGIN:-mysql_native_password} BY '$password';" 
             
             if [ ${ACTION_USER_GRANT_ALL_ON_DB:-no} == 'yes' ]; then

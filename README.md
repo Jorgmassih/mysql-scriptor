@@ -121,7 +121,6 @@ Available Environmental Variables at the moment will be listed below.
 **Others variables**
 | Variable Name              | Options    | Default       | Description                     |
 |----------------------------|------------|---------------|---------------------------------|
-| `PROMPT_PASSWORDS`         | yes,no     | no            | Allways prompt any password.    |
 | `TEST_CONNECTION_ONLY`     | yes,no     | no            | Exits after connection testing. |
 
 

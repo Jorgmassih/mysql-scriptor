@@ -3,9 +3,11 @@ ARG ALPINE_VERSION=3.15
 FROM alpine:$ALPINE_VERSION
 
 # APP Env Variables
-ENV SQL_SCRIPTS_DIR=/sql
+ENV CONFIG_DIR=/etc/scriptor-conf
+ENV SQL_SCRIPTS_DIR=${CONFIG_DIR}/sql
 ENV MYSQL_CLIENT_CONFIG=/etc/mysql/my.cnf
-ENV APP_SCRIPTS_DIR=/scripts
+ENV CUSTOM_CLIENT_CONFIG=${CONFIG_DIR}/my.cnf
+ENV APP_SCRIPTS_DIR=${CONFIG_DIR}/scripts
 ENV USER=mysql-user
 
 # Update and Install myslq-client

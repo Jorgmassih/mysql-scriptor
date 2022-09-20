@@ -67,4 +67,9 @@ if [ $ACTION_USER ]; then
     esac
 fi
 
+if [ $BACKUP_ENABLED == 'yes' ]; then
+    echo "Running backup..."
+    $APP_SCRIPTS_DIR/backup.sh
+fi
+
 exit 0;

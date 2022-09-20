@@ -8,6 +8,7 @@ ENV SQL_SCRIPTS_DIR=${CONFIG_DIR}/sql
 ENV MYSQL_CLIENT_CONFIG=/etc/mysql/my.cnf
 ENV CUSTOM_CLIENT_CONFIG=${CONFIG_DIR}/my.cnf
 ENV APP_SCRIPTS_DIR=${CONFIG_DIR}/scripts
+ENV BACKUP_DIR=${CONFIG_DIR}/backups
 ENV USER=mysql-user
 
 # Update and Install myslq-client
@@ -24,6 +25,11 @@ RUN chmod +x *.sh \
     && touch ${MYSQL_CLIENT_CONFIG} \
     && chgrp ${USER} ${MYSQL_CLIENT_CONFIG} \
     && chmod g+rw ${MYSQL_CLIENT_CONFIG}
+
+# Install minio client
+RUN wget https://dl.min.io/client/mc/release/linux-amd64/mc \
+    && chmod +x mc \
+    && mv mc /usr/local/bin
 
 USER ${USER}
 WORKDIR ${SQL_SCRIPTS_DIR}

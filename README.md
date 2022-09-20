@@ -118,6 +118,28 @@ Available Environmental Variables at the moment will be listed below.
 | `ACTION_DATABASE_NAME`        | any                   | _N/A_                 | Name of database to create or drop.                                   |
 
 
+**Backup variables**
+| Variable Name          | Options               | Default        | Description                                                                         |
+|------------------------|-----------------------|----------------|-------------------------------------------------------------------------------------|
+| `BACKUP_ENABLED`       | yes,no                | no             | Backups MySQL.                                                                      |
+| `BACKUP_NAME`          | any (optional)        | _N/A_          | Set backup file name.                                                               |
+| `BACKUP_TYPE`          | full,database,table   | full           | Specify backup targe type.                                                          |
+| `BACKUP_DATABASE_NAME` | any                   | _N/A_          | Name of the DB to backup. Comma separate if mulyiple of them. e.g db1,db2...        |
+| `BACKUP_TABLE_NAME`    | any                   | _N/A_          | Name of the table to backup. Comma separate if mulyiple of them. e.g tab1,tab2...   |
+| `BACKUP_TO_S3`         | yes,no                | no             | Use S3 for backups. S3 variables must be set to this work.                          |
+
+
+**S3 variables**
+| Variable Name           | Options              | Default               | Description                                                                   |
+|-------------------------|----------------------|-----------------------|-------------------------------------------------------------------------------|
+| `S3_ENDPOINT`           | any (FQDN like)      | _N/A_                 | S3 endpoint name in a FQDN format.                                            |
+| `S3_REGION`             | any                  | us-east-2             | S3 region name.                                                               |
+| `S3_BUCKET`             | any                  | _N/A_                 | S3 Bucket name.                                                               |
+| `S3_FOLDER`             | any (optional)       | _N/A_                 | S3 folder inside Bucket.                                                      |
+| `S3_ACCESS_KEY`         | any                  | _N/A_                 | S3 Access Key.                                                                |
+| `S3_SECRET_KEY`         | any                  | _N/A_                 | S3 Secret Key.                                                                |
+| `S3_SSL`                | yes,no               | yes                   | Specifies if SSL should be used for the endpoint connection (recommended).    |
+
 **Others variables**
 | Variable Name              | Options    | Default       | Description                     |
 |----------------------------|------------|---------------|---------------------------------|
